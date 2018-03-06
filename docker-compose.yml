@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: plastic_ono_band
+      MYSQL_USER: john
+      MYSQL_PASSWORD: birthday1009$$
+      MYSQL_ROOT_PASSWORD: war_is_over
+
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    ports:
+      - 23280:80
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_NAME: plastic_ono_band
+      WORDPRESS_DB_USER: john
+      WORDPRESS_DB_PASSWORD: birthday1009$$
+    volumes:
+      - ./wp-content:/var/www/html/wp-content 
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+
+volumes:
+  db_data:
